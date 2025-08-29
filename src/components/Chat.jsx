@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-export default function Chat({ isOpenMobile, onCloseMobile, messages, onSend }) {
+export default function Chat({ isOpenMobile, onCloseMobile, messages, onSend, collapsed }) {
   const [text, setText] = useState('');
   const endRef = useRef(null);
 
@@ -23,7 +23,7 @@ export default function Chat({ isOpenMobile, onCloseMobile, messages, onSend }) 
         style={{ display: isOpenMobile ? 'block' : 'none' }}
         onClick={onCloseMobile}
       />
-      <aside className={'sidebar right chat ' + (isOpenMobile ? 'open' : '')}>
+      <aside className={'sidebar right chat ' + (isOpenMobile ? 'open' : '') + (collapsed ? ' collapsed' : '')}>
         <div className="sidebar-header">
           <div className="sidebar-title">AI Assistant</div>
           <div className="sidebar-subtitle">Basic (simulated) chat</div>

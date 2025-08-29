@@ -102,6 +102,13 @@ aside.sidebar.right {
   border-right: none;
   border-left: 1px solid var(--panel-border);
 }
+.sidebar.collapsed {
+  min-width: 0;
+  width: 0;
+  padding: 0;
+  border: none;
+  overflow: hidden;
+}
 .sidebar-header {
   padding: 12px;
   border-bottom: 1px solid var(--panel-border);

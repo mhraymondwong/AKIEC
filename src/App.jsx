@@ -39,6 +39,8 @@ export default function App() {
   // UI (mobile drawers)
   const [leftOpen, setLeftOpen] = useState(false);
   const [rightOpen, setRightOpen] = useState(false);
+  const [leftCollapsed, setLeftCollapsed] = useState(false);
+  const [rightCollapsed, setRightCollapsed] = useState(false);
   const [exportOpen, setExportOpen] = useState(false);
 
   // Handlers
@@ -50,6 +52,7 @@ export default function App() {
     setDocuments([doc]);
     setCurrentDocId(doc.id);
     setProcessing('ready');
+    setLeftCollapsed(false);
   };
 
   const handleClearDoc = () => {
@@ -109,11 +112,16 @@ export default function App() {
   const onPinSnippet = (snip) => addSnippetToCanvas(snip);
 
   return (
-    <div className="app">
+    <div
+      className={`app layout-h ${leftCollapsed ? 'l-coll' : ''} ${rightCollapsed ? 'r-coll' : ''}`}>
       <Topbar
         onToggleLeft={() => setLeftOpen((v) => !v)}
         onToggleRight={() => setRightOpen((v) => !v)}
         onExport={() => setExportOpen(true)}
+        leftCollapsed={leftCollapsed}
+        rightCollapsed={rightCollapsed}
+        onToggleLeftCollapsed={() => setLeftCollapsed((v) => !v)}
+        onToggleRightCollapsed={() => setRightCollapsed((v) => !v)}
       />
       <div className="content">
         <LeftSidebar
@@ -124,6 +132,8 @@ export default function App() {
           onUpload={handleUpload}
           onPinSnippet={onPinSnippet}
           onClearDoc={handleClearDoc}
+          onAddSnippet={() => addSnippetToCanvas({ text: 'New Snippet' })}
+          collapsed={leftCollapsed}
         />
         <Canvas
           boxes={boxes}
@@ -139,6 +149,7 @@ export default function App() {
           onCloseMobile={() => setRightOpen(false)}
           messages={messages}
           onSend={handleSendChat}
+          collapsed={rightCollapsed}
         />
       </div>
       <ExportModal open={exportOpen} onClose={() => setExportOpen(false)} boxes={boxes} doc={currentDoc} />

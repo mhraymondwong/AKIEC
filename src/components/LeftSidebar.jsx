@@ -97,7 +97,9 @@ export default function LeftSidebar({
   processing,
   onUpload,
   onPinSnippet,
-  onClearDoc
+  onClearDoc,
+  onAddSnippet,
+  collapsed
 }) {
   return (
     <>
@@ -106,7 +108,7 @@ export default function LeftSidebar({
         style={{ display: isOpenMobile ? 'block' : 'none' }}
         onClick={onCloseMobile}
       />
-      <aside className={'sidebar left ' + (isOpenMobile ? 'open' : '')}>
+      <aside className={`sidebar left ${isOpenMobile ? 'open' : ''} ${collapsed ? 'collapsed' : ''}`}>
         <div className="sidebar-header">
           <div className="sidebar-title">Documents & Snippets</div>
           <div className="sidebar-subtitle">Upload → Process → Select → Act</div>
@@ -122,7 +124,20 @@ export default function LeftSidebar({
             </button>
           </div>
           <div>
-            <div style={{ fontWeight: 700, marginBottom: 8 }}>Snippets</div>
+            <div
+              style={{
+                fontWeight: 700,
+                marginBottom: 8,
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center'
+              }}
+            >
+              <span>Snippets</span>
+              <button className="btn" onClick={onAddSnippet}>
+                + Add Snippet
+              </button>
+            </div>
             <div className="snippet-list">
               {(currentDoc?.snippets || []).map((s) => (
                 <SnippetItem key={s.id} snippet={s} onPin={onPinSnippet} />
